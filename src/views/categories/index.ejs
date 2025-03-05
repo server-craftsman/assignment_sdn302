@@ -1,0 +1,11 @@
+<section class="categories">
+  <h2>Browse Categories</h2>
+  <div class="categories-grid">
+    <% categories.forEach(category => { %>
+    <div class="category-card">
+      <h3><%= category.name %></h3>
+      <p><%= category.description %></p>
+    </div>
+    <% }) %>
+  </div>
+</section>

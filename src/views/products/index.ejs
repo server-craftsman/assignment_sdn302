@@ -1,0 +1,15 @@
+<section class="recent-products">
+  <h2>Recent Products</h2>
+  <div class="products-grid">
+    <% products.forEach(product => { %>
+    <div class="product-card">
+      <img
+        src="<%= product.image_url %>"
+        alt="<%= product.description || `Product image of ${product.name}` %>"
+      />
+      <h3><%= product.name %></h3>
+      <p>$<%= product.price %></p>
+    </div>
+    <% }) %>
+  </div>
+</section>

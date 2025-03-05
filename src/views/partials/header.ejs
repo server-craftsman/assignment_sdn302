@@ -1,0 +1,35 @@
+<header class="header">
+  <nav class="nav-container">
+    <div class="logo">
+      <a href="/">Nguyễn Đan Huy</a>
+    </div>
+
+    <ul class="nav-menu">
+      <li><a href="/" class="nav-link">Home</a></li>
+      <li><a href="/products" class="nav-link">Products</a></li>
+      <li><a href="/categories" class="nav-link">Categories</a></li>
+
+      <% if (locals.user) { %>
+      <li class="nav-item-user">
+        <a href="/profile" class="nav-link">
+          <i class="fas fa-user"></i> <%= user.name %>
+        </a>
+      </li>
+      <li>
+        <form action="/api/auth/logout" method="GET" style="display: inline">
+          <button
+            type="submit"
+            class="nav-link nav-link-logout"
+            style="background: none; border: none; cursor: pointer"
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </form>
+      </li>
+      <% } else { %>
+      <li><a href="/login" class="nav-link">Login</a></li>
+      <li><a href="/register" class="nav-link">Register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
