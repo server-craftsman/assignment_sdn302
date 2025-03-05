@@ -1,3 +1,5 @@
+// import { UserRole } from "./auth.interface";
+
 declare namespace Express {
   interface Request {
     user: {

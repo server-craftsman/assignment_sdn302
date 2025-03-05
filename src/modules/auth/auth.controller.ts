@@ -5,8 +5,6 @@ import { IUser } from "../user";
 import { TokenData } from "./auth.interface";
 import AuthService from "./auth.service";
 import LoginDto from "./dtos/login.dto";
-import jwt from "jsonwebtoken";
-import { logger } from "../../core/utils";
 
 export default class AuthController {
   private authService = new AuthService();
@@ -16,55 +14,9 @@ export default class AuthController {
       const model: LoginDto = req.body;
       const tokenData: TokenData = await this.authService.login(model);
 
-      // Set cookies first
-      res.cookie("access_token", tokenData.access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 15 * 60 * 1000,
-        path: "/",
-        sameSite: "strict",
-      });
-
-      res.cookie("refresh_token", tokenData.refresh_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        path: "/",
-        sameSite: "strict",
-      });
-
-      const user = await this.authService.getCurrentLoginUser(
-        tokenData.access_token
-      );
-
-      // Set session synchronously
-      req.session.user = {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      };
-
-      // Use await to ensure session is saved
-      await new Promise<void>((resolve, reject) => {
-        req.session.save((err) => {
-          if (err) reject(err);
-          resolve();
-        });
-      });
-
-      res.redirect("/");
-    } catch (error: any) {
-      return res.render("main", {
-        title: "Login",
-        content: await res.render(
-          "auth/login",
-          {
-            error: error.message || "Login failed",
-          },
-          (err, html) => html
-        ),
-      });
+      res.status(HttpStatus.OK).json(formatResponse<TokenData>(tokenData));
+    } catch (error) {
+      next(error);
     }
   };
 
@@ -74,17 +26,9 @@ export default class AuthController {
     next: NextFunction
   ) => {
     try {
-      const token = req.cookies.access_token;
-      const user: IUser = await this.authService.getCurrentLoginUser(token);
-
-      // Update session with latest user data
-      req.session.user = {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      };
-
+      const user: IUser = await this.authService.getCurrentLoginUser(
+        req.user.id
+      );
       res.status(HttpStatus.OK).json(formatResponse<IUser>(user));
     } catch (error) {
       next(error);
@@ -93,25 +37,12 @@ export default class AuthController {
 
   public logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Clear session first
-      req.session.destroy((err) => {
-        if (err) {
-          logger.error(`[Logout] Session destruction failed: ${err}`);
-        }
-        
-        // Clear cookies
-        res.clearCookie("access_token", { path: "/" });
-        res.clearCookie("refresh_token", { path: "/" });
-        
-        // Redirect to login page
-        res.redirect("/login");
-      });
+      await this.authService.logout(req.user.id);
+      res
+        .status(HttpStatus.OK)
+        .json(formatResponse<string>("Logout successfully"));
     } catch (error) {
-      logger.error(`[Logout] Error: ${error}`);
-      // Ensure cookies are cleared even if there's an error
-      res.clearCookie("access_token", { path: "/" });
-      res.clearCookie("refresh_token", { path: "/" });
-      res.redirect("/login");
+      next(error);
     }
   };
 

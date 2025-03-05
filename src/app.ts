@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import morgan from "morgan";
-import cookieParser from "cookie-parser";
 import session from "express-session";
 import connectDB from "./database";
 import { ErrorMiddleware } from "./core/middleware";
@@ -64,12 +63,11 @@ export default class App {
         },
       })
     );
-    this.app.use(cookieParser());
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(morgan("dev"));
     this.app.use(express.static(path.join(__dirname, "public")));
-    this.app.use(userMiddleware);
+    // this.app.use(userMiddleware);
   }
 
   private initializeErrorHandling(): void {

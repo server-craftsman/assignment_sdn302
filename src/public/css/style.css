@@ -1,3 +1,11 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+}
+
 /* header */
 .header {
     background-color: #fff;
@@ -6,7 +14,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 9999;
   }
   
   .nav-container {
@@ -93,17 +101,20 @@
   
   /* footer */
 
-.main-footer {
+  .main-footer {
     background-color: #f8f9fa;
     padding: 1.5rem 0;
     margin-top: auto;
-}
+    width: 100%;
+  }
 
-.footer-content {
+
+  .footer-content {
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-}
+    padding: 0 2rem;
+  }
 
 .footer-links {
     margin-top: 1rem;
@@ -118,4 +129,119 @@
 
 .footer-links a:hover {
     color: #333;
+}
+
+/* login page */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+}
+
+.login-form {
+  .form-group {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+      }
+    }
+  }
+
+  .login-button {
+    width: 100%;
+    max-width: max-content;
+    padding: 0.75rem;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #2980b9;
+    }
+  }
+}
+
+/* category */
+.categories {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.categories h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.categories-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+}
+
+.categories-table th,
+.categories-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.categories-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.categories-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.categories-table tr:hover {
+  background-color: #f5f6f7;
 }

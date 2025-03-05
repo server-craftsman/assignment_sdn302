@@ -1,11 +1,21 @@
 <section class="categories">
   <h2>Browse Categories</h2>
-  <div class="categories-grid">
-    <% categories.forEach(category => { %>
-    <div class="category-card">
-      <h3><%= category.name %></h3>
-      <p><%= category.description %></p>
-    </div>
-    <% }) %>
+  <div class="table-responsive">
+    <table class="categories-table">
+      <thead>
+        <tr>
+          <th>Category Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% categories.forEach(category => { %>
+        <tr>
+          <td><%= category.name %></td>
+          <td><%= category.description %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
   </div>
 </section>

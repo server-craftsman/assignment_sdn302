@@ -8,6 +8,8 @@ declare module "express-session" {
       name: string;
       email: string;
       role: UserRole;
+      access_token: string;
+      refresh_token: string;
     };
   }
 }
