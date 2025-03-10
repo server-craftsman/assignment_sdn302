@@ -1,0 +1,32 @@
+<section class="categories">
+  <h2>Category Details</h2>
+  <div class="table-responsive">
+    <table class="categories-table">
+      <thead>
+        <tr>
+          <th>Category Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (category) { %>
+        <tr>
+          <td><%= category.name %></td>
+          <td><%= category.description %></td>
+        </tr>
+        <% } else { %>
+        <tr>
+          <td colspan="2">No category available</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="window.location.href='/categories'"
+  >
+    <i class="fas fa-arrow-left"></i> Back to Categories
+  </button>
+</section>

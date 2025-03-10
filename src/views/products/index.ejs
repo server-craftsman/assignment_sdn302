@@ -1,15 +1,71 @@
-<section class="recent-products">
-  <h2>Recent Products</h2>
-  <div class="products-grid">
-    <% products.forEach(product => { %>
-    <div class="product-card">
-      <img
-        src="<%= product.image_url %>"
-        alt="<%= product.description || `Product image of ${product.name}` %>"
-      />
-      <h3><%= product.name %></h3>
-      <p>$<%= product.price %></p>
-    </div>
-    <% }) %>
+<section class="categories">
+  <h2>Browse Products</h2>
+  <div class="table-responsive">
+    <table class="categories-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Product Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (session && session.user && session.user.role === 'admin') { %>
+        <button
+          type="button"
+          class="btn btn-success"
+          onclick="window.location.href='/products/create'"
+        >
+          Create New Product
+        </button>
+        <% } %> <% if (products && products.length > 0) { %> <%
+        products.forEach(product => { %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.price %></td>
+          <td><%= product.description %></td>
+          <td>
+            <img
+              src="<%= product.image_url %>"
+              alt="<%= product.name %>"
+              class="product-image"
+            />
+          </td>
+          <td>
+            <button
+              type="button"
+              onclick="window.location.href='/products/<%= product._id %>'"
+              class="btn btn-info"
+            >
+              Details
+            </button>
+
+            <% if (session && session.user && session.user.role === 'admin') {
+            %>
+            <button
+              onclick="window.location.href='/products/<%= product._id %>/update'"
+              class="btn btn-warning"
+            >
+              Update
+            </button>
+            <form
+              action="/products/<%= product._id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="5">No products available</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
   </div>
 </section>

@@ -8,6 +8,8 @@ import { UserRoute } from "./modules/user";
 import { AuthRoute } from "./modules/auth";
 //=======================Template Engine==================================
 import { HomeRoute } from "./recourses/home";
+import { CategoryRouteFE } from "./recourses/category";
+import { ProductRouteFE } from "./recourses/product";
 
 const routes = [
   //==================API Routes =========================================
@@ -18,6 +20,8 @@ const routes = [
   new AuthRoute(),
   //==================Template Engine Routes===============================
   new HomeRoute(),
+  new CategoryRouteFE(),
+  new ProductRouteFE(),
 ];
 
 const app = new App(routes);

@@ -10,7 +10,7 @@ import { logger } from "./core/utils";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
 import YAML from "yamljs";
-import { userMiddleware } from "./core/middleware/template.middleware";
+import methodOverride from "method-override";
 
 export default class App {
   public app: express.Application;
@@ -51,23 +51,23 @@ export default class App {
         credentials: true,
       })
     );
+    this.app.use(methodOverride("_method"));
     this.app.use(
       session({
         secret: process.env.SESSION_SECRET || "secret",
         resave: false,
         saveUninitialized: false,
-        cookie: {
-          secure: process.env.NODE_ENV === "production",
-          httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        },
+        // cookie: {
+        //   secure: process.env.NODE_ENV === "production",
+        //   httpOnly: true,
+        //   maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        // },
       })
     );
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(morgan("dev"));
     this.app.use(express.static(path.join(__dirname, "public")));
-    // this.app.use(userMiddleware);
   }
 
   private initializeErrorHandling(): void {

@@ -1,0 +1,28 @@
+<section class="profile">
+  <h2>Profile</h2>
+  <p>Welcome to <span style="color: #007bff; text-transform: uppercase;"><%= session.user.role %></span> user</p>
+  <div class="table-responsive"></div>
+    <table class="profile-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (session && session.user) { %>
+        <tr>
+          <td><%= session.user.name %></td>
+          <td><%= session.user.email %></td>
+          <td><%= session.user.role %></td>
+        </tr>
+        <% } else { %>
+        <tr>
+          <td colspan="3">No user available</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>

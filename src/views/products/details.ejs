@@ -1,0 +1,42 @@
+<section class="categories">
+  <h2>Product Details</h2>
+  <div class="table-responsive">
+    <table class="categories-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Product Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (product) { %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.price %></td>
+          <td><%= product.description %></td>
+          <td>
+            <img 
+              src="<%= product.image_url %>"
+             alt="Product image of <%= product.name %>" 
+             class="product-image" />
+            </td>
+          </td>
+        </tr>
+        <% } else { %>
+        <tr>
+          <td colspan="2">No category available</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="window.location.href='/products'"
+  >
+    <i class="fas fa-arrow-left"></i> Back to Products
+  </button>
+</section>

@@ -1,9 +1,11 @@
 import { ProductService } from "../../modules/product";
 import { CategoryService } from "../../modules/category";
+import AuthService from "../../modules/auth/auth.service";
 
 export default class HomeService {
   private productService = new ProductService();
   private categoryService = new CategoryService();
+  private authService = new AuthService();
 
   public async getHomeData() {
     const [recentProducts, popularCategories] = await Promise.all([
@@ -23,5 +25,9 @@ export default class HomeService {
 
   public async getAllCategories() {
     return this.categoryService.getItems();
+  }
+
+  public async logout(user_id: string) {
+    return this.authService.logout(user_id);
   }
 }

@@ -6,15 +6,54 @@
         <tr>
           <th>Category Name</th>
           <th>Description</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% categories.forEach(category => { %>
+        <% if (session && session.user && session.user.role === 'admin') { %>
+        <button
+          type="button"
+          class="btn btn-success"
+          onclick="window.location.href='/categories/create'"
+        >
+          Create New Category
+        </button>
+        <% } %> <% if (categories && categories.length > 0) { %> <%
+        categories.forEach(category => { %>
         <tr>
           <td><%= category.name %></td>
           <td><%= category.description %></td>
+          <td>
+            <button
+              type="button"
+              onclick="window.location.href='/categories/<%= category._id %>'"
+              class="btn btn-info"
+            >
+              Details
+            </button>
+            <% if (session && session.user && session.user.role === 'admin') {
+            %>
+            <button
+              onclick="window.location.href='/categories/<%= category._id %>/update'"
+              class="btn btn-warning"
+            >
+              Update
+            </button>
+            <form
+              action="/categories/<%= category._id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <% } %>
+          </td>
         </tr>
-        <% }) %>
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="3">No categories available</td>
+        </tr>
+        <% } %>
       </tbody>
     </table>
   </div>

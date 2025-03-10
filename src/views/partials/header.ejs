@@ -9,22 +9,14 @@
       <li><a href="/products" class="nav-link">Products</a></li>
       <li><a href="/categories" class="nav-link">Categories</a></li>
 
-      <% if (locals && locals.session && locals.session.user) { %>
+      <% if (session && session.user) { %>
       <li class="nav-item-user">
-        <span class="nav-link">
-          <i class="fas fa-user"></i> <%= locals.session.user.name %>
-        </span>
-      </li>
-      <li>
-        <a href="/logout" class="nav-link nav-link-logout">
-          <i class="fas fa-sign-out-alt"></i> Logout
+        <a href="/profile">
+          <span class="nav-link">
+            <i class="fas fa-user"></i> <%= session.user.name %>
+            <!-- <i class="fas fa-chevron-down"></i> <%= session.user.access_token %> -->
+          </span>
         </a>
-      </li>
-      <% } else if (session && session.user) { %>
-      <li class="nav-item-user">
-        <span class="nav-link">
-          <i class="fas fa-user"></i> <%= session.user.name %>
-        </span>
       </li>
       <li>
         <a href="/logout" class="nav-link nav-link-logout">
