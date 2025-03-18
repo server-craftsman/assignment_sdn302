@@ -7,9 +7,7 @@ import LoginDto from "../../modules/auth/dtos/login.dto";
 import AuthService from "../../modules/auth/auth.service";
 import jwt from "jsonwebtoken";
 import { RenderTemplateEngine } from "../../core/utils";
-import { session } from "passport";
 
-// import Auth
 export default class HomeController {
   private homeService = new HomeService();
   private authService = new AuthService();
@@ -168,6 +166,46 @@ export default class HomeController {
           user,
         }
       );
+    } catch (error) {
+      next(error);
+    }
+  };
+  public getCreateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      await this.renderTemplateEngine.renderWithSession(
+        req,
+        res,
+        "auth/register",
+        {
+          session: req.session,
+        }
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public createUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      if (!req.session?.user?.id) {
+        res.status(HttpStatus.UNAUTHORIZED).send("Unauthorized");
+        return;
+      }
+      if (!req.body) {
+        res.status(HttpStatus.BAD_REQUEST).send("Bad request");
+        return;
+      }
+      await this.homeService.createUser(req.session.user.id, req.body);
+      await this.homeService.logout(req.session.user.id);
+      return res.redirect("/");
     } catch (error) {
       next(error);
     }
